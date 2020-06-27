@@ -1,0 +1,13 @@
+{% extends 'encuestas/index.html' %}
+
+{% block content %}
+    <h1>Resultados de la pregunta:</h1>
+    <h2>{{ pregunta.pregunta_t }}</h2>
+    <ul>
+        {% for opcion in pregunta.opcion_set.all %}
+        <li>{{ opcion.opcion_t }} -- {{ opcion.voto }} voto{{ opcion.voto|pluralize }}</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'encuestas:detalle' pregunta.id %}"> Volver a votar</a>
+{% endblock %}

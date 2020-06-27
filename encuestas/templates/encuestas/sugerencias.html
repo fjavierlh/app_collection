@@ -1,0 +1,14 @@
+{% extends 'encuestas/index.html' %}
+
+{% block content %}
+<h1>¿Quieres sugerirnos alguna encuesta?</h1>
+<h2>Si quieres enviarnos una encuesta </h2>
+{% if mensaje_error %}
+<div class="alert alert-danger" role="alert">{{ mensaje_error }}</div>
+{% endif %}
+<form action="{% url 'encuestas:sugerencia-enviada' %}" method="post">
+    {% csrf_token %}
+    {{ formulario.as_p }}
+    <input type="submit" class="save btn btn-default" value="Enviar">
+</form>
+{% endblock %}

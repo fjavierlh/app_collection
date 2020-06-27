@@ -1,0 +1,20 @@
+{% extends 'encuestas/index.html' %}
+
+{% block content %}
+    <h1>{{ pregunta.pregunta_t }}</h1>
+
+    {% if mensaje_error %}
+    <p>{{ mensaje_error }}</p>
+    {% endif %}
+
+    <form action="{% url 'encuestas:voto' pregunta.id %}" method="post">
+        {% csrf_token %}
+        {% for opcion in pregunta.opcion_set.all %}
+
+        <input type="radio" name="opcion" id="opcion{{ forloop.counter }}" value="{{ opcion.id }}">
+        <label for="opcion{{ forloop.counter }}">{{ opcion.opcion_t }}</label><br>
+        {% endfor %}
+        <input type="submit" value="Votar">
+    </form>
+    <a href="{% url 'encuestas:index' %}"> Volver a todas las encuestas</a>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'encuestas/index.html' %}
+
+{% block content %}
+<p>{{ mensaje }}</p>
+
+<a href="{% url 'encuestas:sugerencias' %}">Enviar una nueva sugerencia.</a>
+<a href="{% url 'encuestas:index' %}">Volver a todas las encuestas.</a>
+
+{% endblock %}

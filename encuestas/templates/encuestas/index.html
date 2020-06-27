@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+     <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Encuestas</title>
+</head>
+<body>
+
+ <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="{% url 'encuestas:index' %}">Encuestas</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'encuestas:sugerencias' %}">Enviar sugerencia <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+      <!-- Integrar búsqueda de encuestas
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    -->
+  </div>
+</nav>
+<div class="container">
+    <br>
+        <div class="row align-items-center">
+            <div class="col">
+            {% block content %}
+                <h1>Consulta todas nuestras encuestas</h1>
+
+                <ul class="list-unstyled">
+                    {% if ls_ult_publ %}
+                        {% for pregunta in ls_ult_publ %}
+                        <li><h4><a href="{% url 'encuestas:detalle' pregunta.id %}">{{ pregunta.pregunta_t }}</a></h4></li>
+                        <p>{{ pregunta.fecha_p }}</p>
+                        {% endfor %}
+
+                    {% else %}
+                        <p>No hay encuestas publicadas.</p>
+                    {% endif %}
+                </ul>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li class="page-item">
+
+                            {% if page_obj.has_previous %}
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previa">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previa</span>
+                            </a>
+                            {% endif %}
+                        </li>
+
+                        {% for page_number in page_obj.paginator.page_range %}
+                            {% if page_number == page_obj.number %}
+                                 <li class="page-item active">
+                                     <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+                                 </li>
+                            {% else %}
+                                <li class="page-item">
+                                     <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
+                        <li class="page-item">
+                            {% if page_obj.has_next %}
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Previa">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Previa</span>
+                                </a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </nav>
+            {% endblock %}
+            </div>
+        </div>
+</div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
