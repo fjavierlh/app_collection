@@ -11,7 +11,12 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-from .local_settings import APIKeySendgrid
+
+# Importa django-environ para la carga de variables de entorno
+# https://django-environ.readthedocs.io/
+import environ
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,10 +26,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'ktv$(^84taw=u0kj4)q4ar+y0w4)hhj^(5h6ddp^54r4-@hjgs'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -78,7 +83,7 @@ WSGI_APPLICATION = 'app_collection.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, env('DATABASE_NAME')),
     }
 }
 
@@ -121,11 +126,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
-SENDGRID_API_KEY = os.getenv(APIKeySendgrid)
+# Configuración API de SendGrid
+# https://sendgrid.com/docs/for-developers/sending-email/django/https://sendgrid.com/docs/for-developers/sending-email/django/
+SENDGRID_API_KEY = os.getenv(env('SENDGRID_API_KEY'))
 
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_HOST_USER = 'apikey' # this is exactly the value 'apikey'
-EMAIL_HOST_PASSWORD = APIKeySendgrid
+EMAIL_HOST_PASSWORD = env('SENDGRID_API_KEY')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
