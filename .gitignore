@@ -1,2 +1,2 @@
 #Archivo de variables locales
-local_settings.py
+.env
