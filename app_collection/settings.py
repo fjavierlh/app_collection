@@ -128,7 +128,7 @@ STATIC_URL = '/static/'
 
 # Configuración API de SendGrid
 # https://sendgrid.com/docs/for-developers/sending-email/django/https://sendgrid.com/docs/for-developers/sending-email/django/
-SENDGRID_API_KEY = os.getenv(env('SENDGRID_API_KEY'))
+SENDGRID_API_KEY = "secrete-key"
 
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_HOST_USER = 'apikey' # this is exactly the value 'apikey'
